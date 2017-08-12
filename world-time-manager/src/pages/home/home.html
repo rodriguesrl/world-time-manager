@@ -7,19 +7,35 @@
 </ion-header>
 
 <ion-content padding>
-  This is the start of a sweeeeeeeet app:
 
-  <hr><br>
-  <div align=center>
-    <img src="https://cdn1.iconfinder.com/data/icons/nuvola2/128x128/apps/kworldclock.png">
-  </div>
+  <button ion-button block (click)="addClock()"> Add Clock </button>
+
+    <ion-card>
+      <ion-card-header>
+        {{time}}
+      </ion-card-header>
+      <ion-card-content>
+        {{local}}
+      </ion-card-content>
+      <hr>
+      <ion-segment>
+        <ion-segment-button>Reminder</ion-segment-button>
+        <ion-segment-button>Delete</ion-segment-button>
+      </ion-segment>
+    </ion-card>
 
   <ion-card>
     <ion-card-header>
-      {{time}}
+      {{tz}}
     </ion-card-header>
     <ion-card-content>
-      Local Time
+      Berlin Time
     </ion-card-content>
+    <hr>
+    <ion-segment>
+      <ion-segment-button>Reminder</ion-segment-button>
+      <ion-segment-button>Delete</ion-segment-button>
+    </ion-segment>
   </ion-card>
+
 </ion-content>
