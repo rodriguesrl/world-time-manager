@@ -10,32 +10,18 @@
 
   <button ion-button block (click)="addClock()"> Add Clock </button>
 
-    <ion-card>
+    <ion-card *ngFor="let clock of clocks">
       <ion-card-header>
-        {{time}}
+        {{clock.clock}}
       </ion-card-header>
       <ion-card-content>
-        {{local}}
+        {{clock.name}}
       </ion-card-content>
       <hr>
       <ion-segment>
-        <ion-segment-button>Reminder</ion-segment-button>
-        <ion-segment-button>Delete</ion-segment-button>
+        <ion-segment-button (click) = "createReminder()">Reminder</ion-segment-button>
+        <ion-segment-button (click) = "deleteClock(clock)">Delete</ion-segment-button>
       </ion-segment>
     </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      {{tz}}
-    </ion-card-header>
-    <ion-card-content>
-      Berlin Time
-    </ion-card-content>
-    <hr>
-    <ion-segment>
-      <ion-segment-button>Reminder</ion-segment-button>
-      <ion-segment-button>Delete</ion-segment-button>
-    </ion-segment>
-  </ion-card>
 
 </ion-content>

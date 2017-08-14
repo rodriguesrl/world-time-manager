@@ -5,8 +5,8 @@
 </ion-header>
 
 <ion-content padding>
-  
-  <ion-item *ngFor ="let zone of zones">
+
+  <ion-item *ngFor ="let zone of zones" (click) = "selectClock(zone)">
     {{zone}}
   </ion-item>
 </ion-content>

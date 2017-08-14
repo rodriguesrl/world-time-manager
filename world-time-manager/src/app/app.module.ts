@@ -6,14 +6,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { TimezoneSelectorPage } from '../pages/timezone-selector/timezone-selector';
+import { DataManagerProvider } from '../providers/data-manager/data-manager';
+
+import { NativeStorage } from '@ionic-native/native-storage'
 
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    TimezoneSelectorPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -22,13 +23,14 @@ import { TimezoneSelectorPage } from '../pages/timezone-selector/timezone-select
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    TimezoneSelectorPage
+    HomePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DataManagerProvider,
+    NativeStorage
   ]
 })
 export class AppModule {}
