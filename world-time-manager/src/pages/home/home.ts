@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
 import { DataManagerProvider } from '../../providers/data-manager/data-manager';
 import * as moment from 'moment-timezone';
 
@@ -15,7 +15,8 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     public params: NavParams,
     public dataManager: DataManagerProvider,
-    public event: Events
+    public event: Events,
+    public alertCtrl: AlertController
   ){
     this.event.subscribe('createNewClock', zone => {
       this.data['clocks'][this.data['clocks'].length] = zone
@@ -28,9 +29,7 @@ export class HomePage {
         this.startClocks();
       });
     }, () => {
-      this.data['clocks'][0] = this.dataManager.guessTimezone();
-      this.dataManager.saveData(this.data);
-      this.startClocks();
+      this.firstRun();
     });
   }
 
@@ -63,6 +62,19 @@ export class HomePage {
 
   createReminder() {
     console.log("Should create Reminder");
+  };
+
+  firstRun() {
+    this.data['clocks'][0] = this.dataManager.guessTimezone();
+    this.dataManager.saveData(this.data);
+    this.startClocks();
+    let alert = this.alertCtrl.create({
+      title: 'Welcome!',
+      subTitle: 'Since this is the first time you open the app we tried to guess your Timezone. Feel free to delete the standart clock anytime!',
+      buttons: ['Ok']
+    });
+    alert.present();
+
   };
 
 }
