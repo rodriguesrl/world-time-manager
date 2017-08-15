@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-
+  <ion-searchbar (ionInput)="filterList($event)"></ion-searchbar>
   <ion-item *ngFor ="let zone of zones" (click) = "selectClock(zone)">
     {{zone}}
   </ion-item>
