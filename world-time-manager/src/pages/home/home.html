@@ -19,7 +19,7 @@
 
     <div *ngFor="let clock of clocks">
       <ion-badge>{{clock.name}}</ion-badge><br>
-      <ion-card>
+      <ion-card *ngIf="this.data['clocks'][0]">
         <ion-card-header color="primary">
           {{clock.clock}}
         </ion-card-header>
