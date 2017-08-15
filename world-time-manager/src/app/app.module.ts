@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { DataManagerProvider } from '../providers/data-manager/data-manager';
 
 import { NativeStorage } from '@ionic-native/native-storage'
+import { UtilsProvider } from '../providers/utils/utils';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { NativeStorage } from '@ionic-native/native-storage'
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataManagerProvider,
-    NativeStorage
+    NativeStorage,
+    UtilsProvider
   ]
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
 import { DataManagerProvider } from '../../providers/data-manager/data-manager';
+import { UtilsProvider } from '../../providers/utils/utils';
 import * as moment from 'moment-timezone';
 import 'moment/locale/pt-br';
 
@@ -19,7 +20,8 @@ export class HomePage {
     public params: NavParams,
     public dataManager: DataManagerProvider,
     public event: Events,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public utils: UtilsProvider
   ){
 
     this.event.subscribe('createNewClock', zone => {
@@ -56,7 +58,7 @@ export class HomePage {
   };
 
   addClock() {
-    console.log('page');
+    this.event.publish('loadingStart')
     this.navCtrl.push('TimezoneSelectorPage')
   };
 

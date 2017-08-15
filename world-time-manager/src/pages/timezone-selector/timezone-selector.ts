@@ -14,8 +14,11 @@ export class TimezoneSelectorPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public event: Events
-  ){
+  ){}
+
+  ionViewDidEnter(){
     this.refreshList();
+    this.event.publish('loadingStop');
   }
 
   selectClock(zone) {
