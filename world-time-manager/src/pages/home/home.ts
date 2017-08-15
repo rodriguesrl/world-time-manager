@@ -2,13 +2,16 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
 import { DataManagerProvider } from '../../providers/data-manager/data-manager';
 import * as moment from 'moment-timezone';
+import 'moment/locale/pt-br';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  data = {'clocks': []};
+  data = {
+    'clocks': [],
+    'locale': ''};
   clocks = [{'clock': null, 'name': null}];
   timer;
 
@@ -18,14 +21,17 @@ export class HomePage {
     public event: Events,
     public alertCtrl: AlertController
   ){
+
     this.event.subscribe('createNewClock', zone => {
       this.data['clocks'][this.data['clocks'].length] = zone
       this.dataManager.saveData(this.data);
       this.startClocks();
     });
+
     this.dataManager.checkStorage().then(() => {
       this.dataManager.getData().then(data => {
-        this.data['clocks'] = data['clocks'];
+        this.data = data;
+        moment.locale(this.data['locale']);
         this.startClocks();
       });
     }, () => {
@@ -38,11 +44,11 @@ export class HomePage {
     this.timer = setInterval(() => {
       for (let clock in this.data['clocks']) {
         if (this.clocks[clock]) {
-          this.clocks[clock]['clock'] = moment().tz(this.data['clocks'][clock]).format('LTS');
+          this.clocks[clock]['clock'] = moment().tz(this.data['clocks'][clock]).format('LT, L');
           this.clocks[clock]['name'] = this.data['clocks'][clock];
         } else {
           this.clocks = this.clocks.concat({
-            'clock': moment().tz(this.data['clocks'][clock]).format('LTS'),
+            'clock': moment().tz(this.data['clocks'][clock]).format('LT, L'),
             'name': this.data['clocks'][clock]});
         };
       };
@@ -62,10 +68,13 @@ export class HomePage {
 
   createReminder() {
     console.log("Should create Reminder");
+    moment.locale('en');
   };
 
   firstRun() {
     this.data['clocks'][0] = this.dataManager.guessTimezone();
+    this.data['locale'] = 'en';
+    moment.locale(this.data['locale']);
     this.dataManager.saveData(this.data);
     this.startClocks();
     let alert = this.alertCtrl.create({
@@ -76,5 +85,25 @@ export class HomePage {
     alert.present();
 
   };
+
+  changeLang() {
+    let alert = this.alertCtrl.create({
+      title: 'Language',
+      inputs: [
+        {type: 'radio', label: 'Português Brasileiro', value: 'pt-br', checked: true},
+        {type: 'radio', label: 'English', value: 'en'},],
+      buttons: [
+        'Cancel',
+        {
+          text: 'OK',
+          handler: data => {
+            moment.locale(data);
+            this.data['locale'] = data;
+            this.dataManager.saveData(this.data);
+          }
+        }]
+    });
+    alert.present();
+  }
 
 }

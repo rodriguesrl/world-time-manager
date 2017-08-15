@@ -3,25 +3,38 @@
     <ion-title>
       World Time Manager
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addClock()">
+        <ion-icon name="add"></ion-icon>
+        <ion-icon name="time"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="changeLang()">
+        <img height="85%" src="assets/flags/{{data['locale']}}.png">
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <button ion-button block (click)="addClock()"> Add Clock </button>
-
-    <ion-card *ngFor="let clock of clocks">
-      <ion-card-header>
-        {{clock.clock}}
-      </ion-card-header>
-      <ion-card-content>
-        {{clock.name}}
-      </ion-card-content>
-      <hr>
-      <ion-segment>
-        <ion-segment-button (click) = "createReminder()">Reminder</ion-segment-button>
-        <ion-segment-button (click) = "deleteClock(clock)">Delete</ion-segment-button>
-      </ion-segment>
-    </ion-card>
+    <div *ngFor="let clock of clocks">
+      <ion-badge>{{clock.name}}</ion-badge><br>
+      <ion-card>
+        <ion-card-header color="primary">
+          {{clock.clock}}
+        </ion-card-header>
+        <hr>
+        <ion-segment>
+          <ion-segment-button icon-left (click) = "createReminder()">
+            <ion-icon color="secondary" name="alarm"></ion-icon>
+            Reminder
+          </ion-segment-button>
+          <ion-segment-button icon-right (click) = "deleteClock(clock)">
+            Delete
+            <ion-icon color="danger" name="trash"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-card>
+    </div>
 
 </ion-content>
